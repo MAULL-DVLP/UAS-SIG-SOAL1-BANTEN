@@ -75,12 +75,16 @@ for feat in blank_spot["features"]:
                   f"Jumlah Anak Rentan: {p['jumlah_kasus_ispa_stunting']}<br>"
                   f"Kasus ISPA/Stunting: {p['jumlah_kasus_ispa_stunting']}<br>"
                   f"Status: {p['status_wilayah']}")
+    tooltip_html = (f"<b>Desa/RW:</b> {p['nama_desa']}<br>"
+                    f"<b>Balita:</b> {p['jumlah_balita']}<br>"
+                    f"<b>Kasus ISPA/Stunting:</b> {p['jumlah_kasus_ispa_stunting']}<br>"
+                    f"<b>Status:</b> {p['status_wilayah']}")
     folium.GeoJson(
         feat,
         style_function=lambda x: {"fillColor": "red", "color": "darkred",
                                    "fillOpacity": 0.5, "weight": 1},
         popup=folium.Popup(popup_html, max_width=250),
-        tooltip=f"{p['nama_desa']} (Anak Rentan: {p['jumlah_kasus_ispa_stunting']})"
+        tooltip=folium.Tooltip(tooltip_html)
     ).add_to(fg_blank)
 fg_blank.add_to(m)
 
@@ -104,12 +108,16 @@ for feat in populasi["features"]:
                   f"Kasus ISPA/Stunting: {p['jumlah_kasus_ispa_stunting']}<br>"
                   f"Status: {p['status_wilayah']}")
     warna = warna_gradasi(p["jumlah_kasus_ispa_stunting"])
+    tooltip_html = (f"<b>Desa/RW:</b> {p['nama_desa']}<br>"
+                    f"<b>Balita:</b> {p['jumlah_balita']}<br>"
+                    f"<b>Kasus ISPA/Stunting:</b> {p['jumlah_kasus_ispa_stunting']}<br>"
+                    f"<b>Status:</b> {p['status_wilayah']}")
     folium.GeoJson(
         feat,
         style_function=lambda x, warna=warna: {"fillColor": warna, "color": "grey",
                                                 "fillOpacity": 0.6, "weight": 1},
         popup=folium.Popup(popup_html, max_width=250),
-        tooltip=f"{p['nama_desa']} (Anak Rentan: {p['jumlah_kasus_ispa_stunting']})"
+        tooltip=folium.Tooltip(tooltip_html)
     ).add_to(fg_populasi)
 fg_populasi.add_to(m)
 
@@ -121,11 +129,14 @@ for feat in taman["features"]:
     popup_html = (f"<b>{p['nama_taman']}</b><br>"
                   f"Ramah Anak: {p['fasilitas_ramah_anak']}<br>"
                   f"Kapasitas Maks: {p['kapasitas_maks_anak']} anak")
+    tooltip_html = (f"<b>Taman:</b> {p['nama_taman']}<br>"
+                    f"<b>Fasilitas:</b> {p['fasilitas_ramah_anak']}<br>"
+                    f"<b>Kapasitas:</b> {p['kapasitas_maks_anak']} Anak")
     folium.CircleMarker(
         location=[lat, lon], radius=7, color="darkgreen",
         fill=True, fill_color="green", fill_opacity=0.9,
         popup=folium.Popup(popup_html, max_width=250),
-        tooltip=p["nama_taman"]
+        tooltip=folium.Tooltip(tooltip_html)
     ).add_to(fg_taman)
 fg_taman.add_to(m)
 
