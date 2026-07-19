@@ -72,6 +72,7 @@ for feat in blank_spot["features"]:
     p = feat["properties"]
     popup_html = (f"<b>{p['nama_desa']}</b><br>"
                   f"Jumlah Balita: {p['jumlah_balita']}<br>"
+                  f"Jumlah Anak Rentan: {p['jumlah_kasus_ispa_stunting']}<br>"
                   f"Kasus ISPA/Stunting: {p['jumlah_kasus_ispa_stunting']}<br>"
                   f"Status: {p['status_wilayah']}")
     folium.GeoJson(
@@ -79,7 +80,7 @@ for feat in blank_spot["features"]:
         style_function=lambda x: {"fillColor": "red", "color": "darkred",
                                    "fillOpacity": 0.5, "weight": 1},
         popup=folium.Popup(popup_html, max_width=250),
-        tooltip=p["nama_desa"]
+        tooltip=f"{p['nama_desa']} (Anak Rentan: {p['jumlah_kasus_ispa_stunting']})"
     ).add_to(fg_blank)
 fg_blank.add_to(m)
 
@@ -99,6 +100,7 @@ for feat in populasi["features"]:
     p = feat["properties"]
     popup_html = (f"<b>{p['nama_desa']}</b><br>"
                   f"Jumlah Balita: {p['jumlah_balita']}<br>"
+                  f"Jumlah Anak Rentan: {p['jumlah_kasus_ispa_stunting']}<br>"
                   f"Kasus ISPA/Stunting: {p['jumlah_kasus_ispa_stunting']}<br>"
                   f"Status: {p['status_wilayah']}")
     warna = warna_gradasi(p["jumlah_kasus_ispa_stunting"])
@@ -107,7 +109,7 @@ for feat in populasi["features"]:
         style_function=lambda x, warna=warna: {"fillColor": warna, "color": "grey",
                                                 "fillOpacity": 0.6, "weight": 1},
         popup=folium.Popup(popup_html, max_width=250),
-        tooltip=p["nama_desa"]
+        tooltip=f"{p['nama_desa']} (Anak Rentan: {p['jumlah_kasus_ispa_stunting']})"
     ).add_to(fg_populasi)
 fg_populasi.add_to(m)
 
